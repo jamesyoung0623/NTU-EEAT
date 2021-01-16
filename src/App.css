@@ -20,18 +20,6 @@
   font-size: 3em;
 }
 
-.App-username {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.App-username h1 {
-  margin: 0;
-  margin-right: 20px;
-  font-size: 3em;
-}
-
 .App-messages {
   width: 100%;
   height: 300px;

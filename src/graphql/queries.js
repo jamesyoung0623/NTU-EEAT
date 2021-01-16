@@ -1,17 +1,20 @@
 import { gql } from 'apollo-boost'
 
-export const MESSAGE_QUERY = gql`
-  query messages (
-    $receiver: String!
+export const RESTAURANT_QUERY = gql`
+  query restaurants (
+    $style: String!
+    $region: String!
   ) {
-    messages(
+    restaurants(
       data: {
-        receiver: $receiver
+        style: $style
+        region: $region
       }
     ) {
-      sender
-      body
-      receiver
+      name
+		  style
+      region
+      score
     }
   }
 `

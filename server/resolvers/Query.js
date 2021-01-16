@@ -1,9 +1,11 @@
 const Query = {
-  messages(parent, args, { Message }, info) {
-    const user = args.data.receiver
+  restaurants(parent, args, { Restaurant }, info) {
+    const restaurant = {
+      ...args.data
+    }
 
-    const messages = Message.find({ $or: [{ sender: user }, { receiver: user }] });
-    return messages
+    const restaurants = Restaurant.find(restaurant);
+    return restaurants
   }
 }
 

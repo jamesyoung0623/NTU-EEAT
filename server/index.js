@@ -7,7 +7,7 @@ import Subscription from './resolvers/Subscription'
 const express = require('express')
 const mongoose = require('mongoose')
 
-const Message = require('./models/message')
+const Restaurant = require('./models/restaurant')
 
 const pubsub = new PubSub()
 
@@ -31,7 +31,7 @@ const server = new GraphQLServer({
     Subscription,
   },
   context: {
-    Message,
+    Restaurant,
     pubsub
   }
 })

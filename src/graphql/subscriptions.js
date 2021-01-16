@@ -1,19 +1,22 @@
 import { gql } from 'apollo-boost'
 
-export const MESSAGES_SUBSCRIPTION = gql`
-  subscription message (
-    $receiver: String!
+export const RESTAURANTS_SUBSCRIPTION = gql`
+  subscription restaurant (
+    $style: String!
+    $region: String!
   ) {
-    message (
+    restaurant (
       data: {
-        receiver: $receiver
+        style: $style
+        region: $region
       }
     ) {
       mutation
       data {
-        sender
-        body
-        receiver
+        name
+		    style
+        region
+        score
       }
     }
   }

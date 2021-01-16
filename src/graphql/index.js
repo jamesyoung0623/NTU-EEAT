@@ -1,3 +1,3 @@
-export { MESSAGE_QUERY } from './queries'
-export { CREATE_MESSAGE_MUTATION } from './mutations'
-export { MESSAGES_SUBSCRIPTION } from './subscriptions'
+export { RESTAURANT_QUERY } from './queries'
+export { CREATE_RESTAURANT_MUTATION } from './mutations'
+export { RESTAURANTS_SUBSCRIPTION } from './subscriptions'

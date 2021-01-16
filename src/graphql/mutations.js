@@ -1,21 +1,24 @@
 import { gql } from 'apollo-boost'
 
-export const CREATE_MESSAGE_MUTATION = gql`
-  mutation createMessage(
-    $sender: String!
-    $body: String!
-    $receiver: String!
+export const CREATE_RESTAURANT_MUTATION = gql`
+  mutation createRestaurant(
+    $name: String!
+    $style: String!
+    $region: String!
+    $score: String!
   ) {
-    createMessage(
+    createRestaurant(
       data: {
-        sender: $sender
-        body: $body
-        receiver: $receiver
+        name: $name
+        style: $style
+        region: $region
+        score: $score
       }
     ) {
-      sender
-      body
-      receiver
+      name
+		  style
+      region
+      score
     }
   }
 `

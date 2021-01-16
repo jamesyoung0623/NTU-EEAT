@@ -1,41 +1,41 @@
 const Mutation = {
-  createMessage(parent, args, { Message, pubsub }, info) {
-    const message = {
+  createRestaurant(parent, args, { Restaurant, pubsub }, info) {
+    const restaurant = {
       ...args.data
     }
 
-    Message.create(message, function (err) {
+    Restaurant.create(restaurant, function (err) {
       if (err) return handleError(err);
     });
 
-    pubsub.publish('message', {
-      message: {
+    pubsub.publish('restaurant', {
+      restaurant: {
         mutation: 'CREATED',
-        data: message
+        data: restaurant
       }
     })
     
-    const messages = Message.find();
-    return messages
+    const restaurants = Restaurant.find();
+    return restaurants
   },
-  deleteMessage(parent, args, { Message, pubsub }, info) {
-    const message = {
+  deleteRestaurant(parent, args, { Restaurant, pubsub }, info) {
+    const restaurant = {
       ...args.data
     }
     
-    Message.deleteMany(message, function (err) {
+    Restaurant.deleteMany(restaurant, function (err) {
       if (err) return handleError(err);
     });
 
-    pubsub.publish('message', {
-      message: {
+    pubsub.publish('restaurant', {
+      restaurant: {
         mutation: 'DELETED',
-        data: message
+        data: restaurant
       }
     })
     
-    const messages = Message.find();
-    return messages
+    const restaurants = Restaurant.find();
+    return restaurants
   }
 }
 

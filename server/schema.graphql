@@ -1,40 +1,45 @@
 type Query {
-  messages(data: QueryMessageInput!): [Message!]!
+  restaurants(data: QueryRestaurantInput!): [Restaurant!]!
 }
 
 type Mutation {
-  createMessage(data: CreateMessageInput!): [Message!]!
-  deleteMessage(data: DeleteMessageInput!): [Message!]!
+  createRestaurant(data: CreateRestaurantInput!): [Restaurant!]!
+  deleteRestaurant(data: DeleteRestaurantInput!): [Restaurant!]!
 }
 
 type Subscription {
-  message(data: SubscriptionMessageInput!): SubscriptionPayload!
+  restaurant(data: SubscriptionRestaurantInput!): SubscriptionPayload!
 }
 
-input QueryMessageInput {
-  receiver: String!
+input QueryRestaurantInput {
+  style: String
+  region: String
 }
 
-input CreateMessageInput {
-  sender: String!
-  body: String!
-  receiver: String!
+input CreateRestaurantInput {
+  name: String!
+  style: String!
+  region: String!
+  score: Float!
 }
 
-input DeleteMessageInput {
-  sender: String!
-  body: String!
-  receiver: String!
+input DeleteRestaurantInput {
+  name: String!
+  style: String!
+  region: String!
+  score: Float!
 }
 
-input SubscriptionMessageInput {
-  receiver: String!
+input SubscriptionRestaurantInput {
+  style: String!
+  region: String!
 }
 
-type Message {
-  sender: String!
-  body: String!
-  receiver: String!
+type Restaurant {
+  name: String!
+  style: String!
+  region: String!
+  score: Float!
 }
 
 enum MutationType {
@@ -44,5 +49,5 @@ enum MutationType {
 
 type SubscriptionPayload {
   mutation: MutationType!
-  data: Message!
+  data: Restaurant!
 }

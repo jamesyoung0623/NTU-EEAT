@@ -1,14 +1,16 @@
 const { withFilter } = require('apollo-server');
 
 const Subscription = {
-  message: {
+  restaurant: {
     subscribe: withFilter(
-      (parent, args , { pubsub }, info) => pubsub.asyncIterator('message'),
+      (parent, args , { pubsub }, info) => pubsub.asyncIterator('restaurant'),
       (payload, variables) => {
-        const sender = payload.message.data.sender
-        const receiver = payload.message.data.receiver
-        const user = variables.data.receiver
-        return receiver === user || sender === user;
+        const restaurant_style = payload.restaurant.data.style
+        const restaurant_region = payload.restaurant.data.region
+        const style = variables.data.style
+        const region = variables.data.region
+
+        return restaurant_style === style && restaurant_region === region;
       }
     )
   }
