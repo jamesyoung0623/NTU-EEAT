@@ -113,6 +113,7 @@ const Home = function () {
     } else {
       setFilterStatus(e.target.innerText);
     }
+    console.log("Now the filter status is: " + filterStatus + "   -----By WengCF");
   };
 
   //--************************************************** Return Frame **************************************************--//
