@@ -19,8 +19,6 @@ import {
 
 const Home = function () {
   const [status, setStatus] = useState("");
-  const [style, setStyle] = useState("");
-  const [region, setRegion] = useState("");
   const [filterStatus, setFilterStatus] = useState("ALL");
   const [isAddingItem, setIsAddingItem] = useState(false);
   const [restaurantName, setRestaurantName] = useState("");
@@ -49,7 +47,7 @@ const Home = function () {
   ];
 
   const { subscribeToMore, ...result } = useQuery(RESTAURANT_QUERY, {
-    variables: { style: style, region: region },
+    variables: { style: restaurantStyle, region: restaurantRegion },
   });
 
   const [addRestaurant] = useMutation(CREATE_RESTAURANT_MUTATION);
@@ -57,7 +55,7 @@ const Home = function () {
   useEffect(() => {
     subscribeToMore({
       document: RESTAURANTS_SUBSCRIPTION,
-      variables: { style: style, region: region },
+      variables: { style: restaurantStyle, region: restaurantRegion },
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
         const newRestaurant = subscriptionData.data.restaurant.data;
@@ -103,7 +101,9 @@ const Home = function () {
       });
       return;
     }
-    const newRestaurant = { style: style, region: region };
+    console.log("msg is : " + msg);
+    const newRestaurant = {name: restaurantName, style: restaurantStyle, region: restaurantRegion, score: restaurantScore };
+    console.log("newRestaurant " + newRestaurant.name);
     addRestaurant({ variables: newRestaurant });
   };
 
