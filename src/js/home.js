@@ -26,7 +26,7 @@ const Home = function () {
   const [restaurantName, setRestaurantName] = useState("");
   const [restaurantStyle, setRestaurantStyle] = useState("");
   const [restaurantRegion, setRestaurantRegion] = useState("");
-  const [restaurantScore, setRestaurantScore] = useState(0);
+  const [restaurantScore, setRestaurantScore] = useState("");
 
   const inputStyleRef = useRef(null);
   const inputRegionRef = useRef(null);
@@ -108,12 +108,15 @@ const Home = function () {
   };
 
   const handleChangeFilter = (e) => {
-    if (e.target.innerText === "添加") {
+    if (e.target.innerText === "ADD") {
+      console.log("Now we set isAddingItem be true");
       setIsAddingItem(true);
     } else {
       setFilterStatus(e.target.innerText);
+      setIsAddingItem(false);
     }
     console.log("Now the filter status is: " + filterStatus + "   -----By WengCF");
+    console.log("Now the isAddingItem status is: " + isAddingItem + "   -----By WengCF");
   };
 
   //--************************************************** Return Frame **************************************************--//
@@ -160,7 +163,7 @@ const Home = function () {
               <Button onClick={handleChangeFilter}>溫州</Button>
               <Button onClick={handleChangeFilter}>118</Button>
               <Button onClick={handleChangeFilter}>其他</Button>
-              <Button onClick={handleChangeFilter}>添加</Button>
+              <Button onClick={handleChangeFilter}>ADD</Button>
             </div>
           </div>
           <div className="row">
