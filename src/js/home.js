@@ -1,7 +1,6 @@
 import "./home.css";
 import logo from "../images/logo.png";
 
-import Select from "react-select";
 import { Button } from "antd";
 import { useRef } from "react";
 
@@ -9,7 +8,6 @@ import React, { useEffect, useState } from "react";
 import { Input, message, Tag } from "antd";
 import { useQuery, useMutation } from "@apollo/react-hooks";
 
-import Restaurants from "./Restaurants.js";
 
 import {
   RESTAURANT_QUERY,
@@ -126,6 +124,35 @@ const Home = function () {
   };
 
   //--************************************************** Return Frame **************************************************--//
+  const Restaurants = (props) => {
+    if (props.data) {
+      console.log(props.data);
+      if (props.data.restaurants.length !== 0) {
+        return props.data.restaurants.map(({ name, style, region, score }, i) => {
+          return (
+              <div className="restaurant-block" key={i}>
+                <Tag color="blue">
+                  <p>name: {name}</p>
+                  <p>style: {style}</p>
+                  <p>region: {region}</p>
+                  <p>score: {score}</p>
+                </Tag>
+              </div>
+          );
+        });
+      } else {
+        return (
+          <>
+            <div>No restaurant yet...</div>
+            <div>Try input one!</div>
+          </>
+        );
+      }
+    } else {
+      return <div>Loading...</div>;
+    }
+  };
+  
   return (
     <>
       <div className="top-box">
@@ -179,7 +206,7 @@ const Home = function () {
                   }}
                 ></Input>
                 <Input
-                  placeholder="Restaurant region (ex: Gongguan、Wenzhou...)"
+                  placeholder="Restaurant region (You can type: 'Gongguan', 'Wenzhou', '118', or 'others')"
                   value={restaurantRegion}
                   ref={inputRegionRef}
                   onChange={(e) => setRestaurantRegion(e.target.value)}
@@ -211,5 +238,7 @@ const Home = function () {
     </>
   );
 };
+
+
 
 export default Home;

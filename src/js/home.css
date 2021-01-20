@@ -16,6 +16,7 @@ img {
 
 .mybody {
   display: flex;
+  background-color: #c3bcaa;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -24,7 +25,7 @@ img {
 }
 
 .container {
-  padding-bottom: 30px;
+  padding-bottom: 0px;
 }
 
 .top-box {
@@ -60,4 +61,14 @@ img {
   margin: 20px;
   padding: 20px;
   overflow: auto;
+}
+
+p {
+  display:inline;
+  padding:10px;
+  margin:0px;
+}
+
+.restaurant-block {
+  margin-bottom:10px;
 }
