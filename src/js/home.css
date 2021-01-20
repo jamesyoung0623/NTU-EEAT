@@ -33,8 +33,8 @@ img {
 }
 
 .restaurant-box {
-    margin: 0 auto;
-    height: 190vh;
+  margin: 0 auto;
+  height: 400vh;
 }
 
 .restaurant-header {
@@ -49,4 +49,15 @@ img {
   cursor: pointer;
   padding: 5px 30px;
   font-size: 18px;
+  margin-left: 0.1em;
+}
+
+.restaurant-list {
+  width: 100%;
+  height: 300px;
+  background: #eeeeee52;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+  overflow: auto;
 }

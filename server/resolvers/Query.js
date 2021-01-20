@@ -1,12 +1,17 @@
 const Query = {
   restaurants(parent, args, { Restaurant }, info) {
     const restaurant = {
-      ...args.data
+      ...args.data,
+    };
+    let restaurants;
+    if (restaurant.region === "ALL") {
+      restaurants = Restaurant.find();
+    } else {
+      restaurants = Restaurant.find(restaurant);
     }
 
-    const restaurants = Restaurant.find(restaurant);
-    return restaurants
-  }
-}
+    return restaurants;
+  },
+};
 
-export { Query as default }
+export { Query as default };

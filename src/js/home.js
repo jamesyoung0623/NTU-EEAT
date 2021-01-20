@@ -8,7 +8,6 @@ import { useRef } from "react";
 import React, { useEffect, useState } from "react";
 import { Input, message, Tag } from "antd";
 import { useQuery, useMutation } from "@apollo/react-hooks";
-import { onError } from 'apollo-link-error';
 
 import Restaurants from "./Restaurants.js";
 
@@ -26,29 +25,15 @@ const Home = function () {
   const [restaurantStyle, setRestaurantStyle] = useState("");
   const [restaurantRegion, setRestaurantRegion] = useState("");
   const [restaurantScore, setRestaurantScore] = useState("");
+  const [region, setRegion] = useState("ALL");
+  const [sendSwitch, setSendSwitch] = useState(true);
 
   const inputStyleRef = useRef(null);
   const inputRegionRef = useRef(null);
   const inputScoreRef = useRef(null);
 
-  const styleOptions = [
-    { value: "", label: "選擇您想吃的餐點類型" },
-    { value: "壽司/日式", label: "壽司/日式" },
-    { value: "韓式料理", label: "韓式料理" },
-    { value: "特別料理", label: "特別料理" },
-    { value: "東南亞料理", label: "東南亞料理" },
-  ];
-
-  const regionOptions = [
-    { value: "", label: "選擇您傾向的用餐區域" },
-    { value: "公館", label: "公館" },
-    { value: "溫州", label: "溫州" },
-    { value: "118", label: "118" },
-    { value: "其他", label: "其他" },
-  ];
-
   const { subscribeToMore, ...result } = useQuery(RESTAURANT_QUERY, {
-    variables: { style: restaurantStyle, region: restaurantRegion },
+    variables: { region: region },
   });
 
   const [addRestaurant] = useMutation(CREATE_RESTAURANT_MUTATION);
@@ -56,7 +41,7 @@ const Home = function () {
   useEffect(() => {
     subscribeToMore({
       document: RESTAURANTS_SUBSCRIPTION,
-      variables: { style: restaurantStyle, region: restaurantRegion },
+      variables: { region: region },
       updateQuery: (prev, { subscriptionData }) => {
         if (!subscriptionData.data) return prev;
         const newRestaurant = subscriptionData.data.restaurant.data;
@@ -90,7 +75,12 @@ const Home = function () {
 
   useEffect(() => {
     displayStatus(status);
-  }, [status]);
+    setIsAddingItem(false);
+    setRestaurantName("");
+    setRestaurantStyle("");
+    setRestaurantRegion("");
+    setRestaurantScore("");
+  }, [status, sendSwitch]);
 
   //--************************************************** Handle Function **************************************************--//
 
@@ -108,8 +98,6 @@ const Home = function () {
       });
       return;
     }
-    console.log("type of restaurantName is : " + typeof(restaurantName));
-    console.log("type of restaurantScore is : " + typeof(restaurantScore));
 
     const newRestaurant = {
       name: restaurantName,
@@ -117,8 +105,14 @@ const Home = function () {
       region: restaurantRegion,
       score: restaurantScore,
     };
-    console.log("newRestaurant " + newRestaurant.name);
+
     addRestaurant({ variables: newRestaurant });
+    if (sendSwitch === false) {
+      setSendSwitch(true);
+    } else {
+      setSendSwitch(false);
+    }
+
   };
 
   const handleChangeFilter = (e) => {
@@ -127,6 +121,7 @@ const Home = function () {
     } else {
       setFilterStatus(e.target.innerText);
       setIsAddingItem(false);
+      setRegion(e.target.innerText);
     }
   };
 
@@ -138,27 +133,6 @@ const Home = function () {
           <h1>
             <img src={logo} alt="" />
           </h1>
-
-          <div className="choosing-bars">
-            <div className="App-querybars">
-              <Select
-                className="basic-single"
-                classNamePrefix="select"
-                defaultValue={styleOptions[0]}
-                name="style"
-                options={styleOptions}
-              />
-            </div>
-            <div className="App-querybars">
-              <Select
-                className="basic-single"
-                classNamePrefix="select"
-                defaultValue={regionOptions[0]}
-                name="region"
-                options={regionOptions}
-              />
-            </div>
-          </div>
         </div>
       </div>
       <div className="restaurant-box">
@@ -170,10 +144,10 @@ const Home = function () {
           <div className="row">
             <div className="filter-button-group">
               <Button onClick={handleChangeFilter}>ALL</Button>
-              <Button onClick={handleChangeFilter}>公館</Button>
-              <Button onClick={handleChangeFilter}>溫州</Button>
+              <Button onClick={handleChangeFilter}>Gongguan</Button>
+              <Button onClick={handleChangeFilter}>Wenzhou</Button>
               <Button onClick={handleChangeFilter}>118</Button>
-              <Button onClick={handleChangeFilter}>其他</Button>
+              <Button onClick={handleChangeFilter}>Others</Button>
               <Button onClick={handleChangeFilter}>ADD</Button>
             </div>
           </div>
@@ -193,7 +167,7 @@ const Home = function () {
                   }}
                 ></Input>
                 <Input
-                  placeholder="Restaurant style (ex: 壽司/日式、韓式料理...)"
+                  placeholder="Restaurant style (ex: sushi/japanese、Korean cuisine...)"
                   value={restaurantStyle}
                   ref={inputStyleRef}
                   onChange={(e) => setRestaurantStyle(e.target.value)}
@@ -205,7 +179,7 @@ const Home = function () {
                   }}
                 ></Input>
                 <Input
-                  placeholder="Restaurant region (ex: 公館、溫州...)"
+                  placeholder="Restaurant region (ex: Gongguan、Wenzhou...)"
                   value={restaurantRegion}
                   ref={inputRegionRef}
                   onChange={(e) => setRestaurantRegion(e.target.value)}
@@ -227,7 +201,9 @@ const Home = function () {
                 ></Input.Search>
               </>
             ) : (
-              <Restaurants filter={filterStatus} data={result.data} />
+              <div className="restaurant-list">
+                <Restaurants filter={filterStatus} data={result.data} />
+              </div>
             )}
           </div>
         </div>
