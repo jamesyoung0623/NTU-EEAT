@@ -20,14 +20,14 @@ input CreateRestaurantInput {
   name: String!
   style: String!
   region: String!
-  score: Float!
+  score: String!
 }
 
 input DeleteRestaurantInput {
   name: String!
   style: String!
   region: String!
-  score: Float!
+  score: String!
 }
 
 input SubscriptionRestaurantInput {
@@ -39,7 +39,7 @@ type Restaurant {
   name: String!
   style: String!
   region: String!
-  score: Float!
+  score: String!
 }
 
 enum MutationType {

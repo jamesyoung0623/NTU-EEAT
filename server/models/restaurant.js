@@ -16,7 +16,7 @@ const RestaurantSchema = new Schema({
 		required: [true, 'Region field is required.']
 	},
 	score: {
-		type: Number,
+		type: String,
 		required: [true, 'Score field is required.']
 	}
 })

@@ -8,6 +8,7 @@ import { useRef } from "react";
 import React, { useEffect, useState } from "react";
 import { Input, message, Tag } from "antd";
 import { useQuery, useMutation } from "@apollo/react-hooks";
+import { onError } from 'apollo-link-error';
 
 import Restaurants from "./Restaurants.js";
 
@@ -94,29 +95,39 @@ const Home = function () {
   //--************************************************** Handle Function **************************************************--//
 
   const handleRestaurantSend = (msg) => {
-    if (!msg) {
+    if (
+      !msg ||
+      restaurantName === "" ||
+      restaurantStyle === "" ||
+      restaurantRegion === "" ||
+      restaurantScore === ""
+    ) {
       displayStatus({
         type: "error",
-        msg: "Please enter a targetname and a message body.",
+        msg: "Please enter a valid restaurant information.",
       });
       return;
     }
-    console.log("msg is : " + msg);
-    const newRestaurant = {name: restaurantName, style: restaurantStyle, region: restaurantRegion, score: restaurantScore };
+    console.log("type of restaurantName is : " + typeof(restaurantName));
+    console.log("type of restaurantScore is : " + typeof(restaurantScore));
+
+    const newRestaurant = {
+      name: restaurantName,
+      style: restaurantStyle,
+      region: restaurantRegion,
+      score: restaurantScore,
+    };
     console.log("newRestaurant " + newRestaurant.name);
     addRestaurant({ variables: newRestaurant });
   };
 
   const handleChangeFilter = (e) => {
     if (e.target.innerText === "ADD") {
-      console.log("Now we set isAddingItem be true");
       setIsAddingItem(true);
     } else {
       setFilterStatus(e.target.innerText);
       setIsAddingItem(false);
     }
-    console.log("Now the filter status is: " + filterStatus + "   -----By WengCF");
-    console.log("Now the isAddingItem status is: " + isAddingItem + "   -----By WengCF");
   };
 
   //--************************************************** Return Frame **************************************************--//
