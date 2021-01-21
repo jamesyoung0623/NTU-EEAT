@@ -24,6 +24,6 @@
 + b06501114 翁丞甫: frontend, UI/UX, deployment
 
 ### Deploy link
-https://ntu-eeat.herokuapp.com
+https://ntu--eeat.herokuapp.com
 
 
