@@ -20,8 +20,8 @@
     yarn start
     ```
 ### Distribution
-b06901077 楊晉佳: backend, database, frontend-backend communication
-b06501114 翁丞甫: frontend, UI/UX, deployment
++ b06901077 楊晉佳: backend, database, frontend-backend communication
++ b06501114 翁丞甫: frontend, UI/UX, deployment
 
 ### Deploy link
 https://ntu-eeat.herokuapp.com
